@@ -1,0 +1,25 @@
+{
+  "name": "hackjam.rxjs",
+  "version": "0.0.1",
+  "description": "Rebuild rxjs from scratch",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hackages/hackjam.rxjs.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/hackages/hackjam.rxjs/issues"
+  },
+  "homepage": "https://github.com/hackages/hackjam.rxjs#readme",
+  "dependencies": {
+    "rxjs": "git+https://git@github.com/hackages/rxjs.git"
+  },
+  "devDependencies": {
+  }
+}
