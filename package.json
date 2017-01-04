@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/hackages/hackjam.rxjs#readme",
   "dependencies": {
-    "rxjs": "git+https://git@github.com/hackages/rxjs.git"
+    "rxjs": "git+ssh://git@github.com/hackages/rxjs"
   },
   "devDependencies": {
   }
