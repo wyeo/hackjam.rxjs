@@ -221,3 +221,40 @@ Observable.prototype.startWith = function (...args) {
     });
   });
 };
+
+/**
+ * Combinations operators : concat
+ * Concatenates multiple Observables together by sequentially emitting their values, one Observable after the other.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/combination/concat.html} for examples.
+ *
+ * @param args {Array}
+ * @returns {Observable}
+ */
+Observable.prototype.concat = Observable.concat = function (...observables) {
+  const observable = this;
+  return new Observable((observer) => {
+    const sources$ = observables.slice();
+
+    if (typeof observable.subscribe === 'function') {
+      observable.subscribe(observer.next, observer.error, concat);
+      return;
+    }
+    concat();
+    function concat() {
+      let subscribed = false;
+      let obs$;
+      while (sources$.length !== 0) {
+        if (!subscribed) {
+          obs$ = sources$.shift();
+          subscribed = true;
+          obs$
+            .subscribe(observer.next, observer.error, () => {
+              subscribed = false;
+            });
+        }
+      }
+      observer.complete();
+    }
+  });
+};

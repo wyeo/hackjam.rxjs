@@ -281,11 +281,11 @@ describe('Rxjs', () => {
       });
 
     });
-    describe('startWith :', () => {
+    xdescribe('startWith :', () => {
       it('should start with on number sequence', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
         let result = [];
-        const actual = [0,1, 2, 3, 4, 5];
+        const actual = [0, 1, 2, 3, 4, 5];
         const subscribe = source$
           .startWith(0)
           .subscribe(
@@ -302,9 +302,9 @@ describe('Rxjs', () => {
       it('should start with multiple values', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
         let result = [];
-        const actual = [-1,0,1, 2, 3, 4, 5];
+        const actual = [-1, 0, 1, 2, 3, 4, 5];
         const subscribe = source$
-          .startWith(-1,0)
+          .startWith(-1, 0)
           .subscribe(
             val => result = [...result, val],
             () => {
@@ -316,6 +316,42 @@ describe('Rxjs', () => {
           );
       });
 
+    });
+    describe('concat :', () => {
+      it('should concat 2 basic observables', (done) => {
+        const sourceOne$ = Observable.of(10);
+        const sourceTwo$ = Observable.of(20);
+        let result = [];
+        const actual = [10, 20];
+        const subscribe = sourceOne$.concat(sourceTwo$)
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+
+      it('should concat as static method', (done) => {
+        const sourceOne$ = Observable.of(10);
+        const sourceTwo$ = Observable.of(20);
+        let result = [];
+        const actual = [10, 20];
+        const subscribe = Observable
+          .concat(sourceOne$, sourceTwo$)
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
     });
   });
 });
