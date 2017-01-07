@@ -207,5 +207,24 @@ describe('Rxjs', () => {
           );
       });
     });
+    describe('mapTo :', () => {
+
+      it('should every emission to "a" ', (done) => {
+        const source$ = Observable.from([1, 2, 3, 4, 5]).mapTo('a');
+        let result = [];
+        const actual = ['a', 'a', 'a', 'a', 'a'];
+        const subscribe = source$
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+
+    });
   });
 });
