@@ -33,6 +33,9 @@ Observable.of = (...args) => {
  * Static creation operators : fromArray
  * Converts an array to an Observable.
  *
+ * /!\ doesn't exist in Rxjs, so use from operators see below
+ * @see {@link https://www.learnrxjs.io/operators/creation/from.html } for examples.
+ *
  * @param args {Array}
  * @returns {Observable}
  */
@@ -46,6 +49,7 @@ Observable.fromArray = (args = []) => {
       observer.complete()
     } catch (error) {
       observer.error(error);
+      observer.complete();
     }
   };
   return new Observable(producer);
@@ -55,12 +59,13 @@ Observable.fromArray = (args = []) => {
  * Static creation operators : fromPromise
  * Converts an promise to an Observable.
  *
+ * @see {@link https://www.learnrxjs.io/operators/creation/frompromise.html } for examples.
+ *
  * @param promise {Promise}
  * @returns {Observable}
  */
 Observable.fromPromise = (promise = {}) => {
   return new Observable((observer) => {
-    console.log('producer', promise)
     if (typeof promise.then !== 'function') {
       observer.error(' The function provided in argument should be a Promise');
       observer.complete();
@@ -74,5 +79,25 @@ Observable.fromPromise = (promise = {}) => {
       observer.error('Error in the resolution of the promise');
       observer.complete();
     })
+  });
+};
+
+/**
+ * Static creation operators : from
+ * Converts almost anything to an Observable
+ *
+ * @see {@link https://www.learnrxjs.io/operators/creation/from.html } for examples.
+ *
+ * @param input
+ * @returns {Observable}
+ */
+Observable.from = (input) => {
+  return new Observable((observer) => {
+
+    if (typeof input.then === 'function') {
+      return Observable.fromPromise(input).subscribe(observer);
+    }
+
+    return Observable.fromArray(input).subscribe(observer);
   });
 };
