@@ -197,3 +197,27 @@ Observable.prototype.do = function (next = (() => {
       });
   });
 };
+
+
+/**
+ * Combinations operators : startWith
+ * Emit given value first
+ *
+ * @see {@link https://www.learnrxjs.io/operators/combination/startwith.html} for examples.
+ *
+ * @param args {Array}
+ * @returns {Observable}
+ */
+Observable.prototype.startWith = function (...args) {
+  const observable = this;
+  return new Observable((observer) => {
+    args.forEach((value) => observer.next(value));
+    observable.subscribe((data) => {
+      observer.next(data);
+    }, (err) => {
+      observer.error(err);
+    }, () => {
+      observer.complete();
+    });
+  });
+};
