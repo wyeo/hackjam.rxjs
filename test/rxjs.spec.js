@@ -226,7 +226,7 @@ describe('Rxjs', () => {
       });
 
     });
-    describe('do :', () => {
+    xdescribe('do :', () => {
 
       it('should just logging ', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
@@ -236,6 +236,39 @@ describe('Rxjs', () => {
           .do(val => console.log(`Before mapTo: ${val}`))
           .mapTo('a')
           .do(val => console.log(`After mapTo: ${val}`))
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+    });
+    describe('filter :', () => {
+      it('should filter for even numbers', (done) => {
+        const source$ = Observable.from([1, 2, 3, 4, 5]).filter(num => num % 2 === 0);
+        let result = [];
+        const actual = [2, 4];
+        const subscribe = source$
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+      it('should filter objects based on property', (done) => {
+        const from$ = Observable.from([{name: 'Joe', age: 30}, {name: 'Frank', age: 20}, {name: 'Ryan', age: 50}]);
+        const source$ = Observable.filter(person => person.age >= 30, from$).map(person => person.name);
+        let result = [];
+        const actual = ["Joe", "Ryan"];
+        const subscribe = source$
           .subscribe(
             val => result = [...result, val],
             () => {

@@ -112,12 +112,40 @@ Observable.from = (input) => {
  * @param thisArgs: an optional argument to define what this is in the project function
  * @returns {Observable}
  */
+
 Observable.prototype.map = Observable.map = function (projection, thisArgs) {
   const observable = thisArgs || this;
   return new Observable((observer) => {
     observable
       .subscribe((data) => {
         observer.next(projection(data));
+      }, (err) => {
+        observer.error(err);
+      }, () => {
+        observer.complete();
+      });
+  });
+};
+
+/**
+ * Filtering operators : filter
+ * only emits a value from the source if it passes a criterion function.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/filtering/filter.html } for examples.
+
+ * @param predicate
+ * @param thisArgs: an optional argument to define what this is in the project function
+ * @returns {Observable}
+ */
+Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {
+  const observable = thisArgs || this;
+  return new Observable((observer) => {
+    observable
+      .subscribe((data) => {
+        const res = predicate(data);
+        if (res) {
+          observer.next(data);
+        }
       }, (err) => {
         observer.error(err);
       }, () => {
@@ -151,7 +179,10 @@ Observable.prototype.mapTo = function (constant) {
  * @param complete
  * @returns {Observable}
  */
-Observable.prototype.do = function (next= (() => { }),error = (() => { }), complete = (() => { })) {
+Observable.prototype.do = function (next = (() => {
+}), error = (() => {
+}), complete = (() => {
+})) {
   return new Observable((observer) => {
     this
       .subscribe((data) => {
