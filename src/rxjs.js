@@ -131,11 +131,38 @@ Observable.prototype.map = Observable.map = function (projection, thisArgs) {
  * Maps every value to the same value every time
  *
  * @see {@link https://www.learnrxjs.io/operators/transformation/mapto.html } for examples.
-
+ *
  * @param constant
  * @returns {Observable}
  */
 Observable.prototype.mapTo = function (constant) {
   return this
     .map((e) => constant);
+};
+
+/**
+ * Transformation operators : do
+ * Transparently perform actions or side-effects, such as logging.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/utility/do.html } for examples.
+ *
+ * @param next
+ * @param error
+ * @param complete
+ * @returns {Observable}
+ */
+Observable.prototype.do = function (next= (() => { }),error = (() => { }), complete = (() => { })) {
+  return new Observable((observer) => {
+    this
+      .subscribe((data) => {
+        next(data);
+        observer.next(data);
+      }, (err) => {
+        error(err);
+        observer.error(err);
+      }, () => {
+        complete();
+        observer.complete();
+      });
+  });
 };

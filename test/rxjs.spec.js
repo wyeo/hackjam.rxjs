@@ -207,13 +207,35 @@ describe('Rxjs', () => {
           );
       });
     });
-    describe('mapTo :', () => {
+    xdescribe('mapTo :', () => {
 
       it('should every emission to "a" ', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]).mapTo('a');
         let result = [];
         const actual = ['a', 'a', 'a', 'a', 'a'];
         const subscribe = source$
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+
+    });
+    describe('do :', () => {
+
+      it('should just logging ', (done) => {
+        const source$ = Observable.from([1, 2, 3, 4, 5]);
+        let result = [];
+        const actual = ['a', 'a', 'a', 'a', 'a'];
+        const subscribe = source$
+          .do(val => console.log(`Before mapTo: ${val}`))
+          .mapTo('a')
+          .do(val => console.log(`After mapTo: ${val}`))
           .subscribe(
             val => result = [...result, val],
             () => {
