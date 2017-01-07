@@ -101,3 +101,27 @@ Observable.from = (input) => {
     return Observable.fromArray(input).subscribe(observer);
   });
 };
+
+/**
+ * Transformation operators : map
+ * Apply a projection to each value and emits that projection in the returned observable
+ *
+ * @see {@link https://www.learnrxjs.io/operators/transformation/map.html } for examples.
+
+ * @param projection
+ * @param thisArgs: an optional argument to define what this is in the project function
+ * @returns {Observable}
+ */
+Observable.prototype.map = Observable.map = function (projection, thisArgs) {
+  const observable = thisArgs || this;
+  return new Observable((observer) => {
+    observable
+      .subscribe((data) => {
+        observer.next(projection(data));
+      }, (err) => {
+        observer.error(err);
+      }, () => {
+        observer.complete();
+      });
+  });
+};

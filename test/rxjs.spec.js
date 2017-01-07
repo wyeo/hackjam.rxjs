@@ -85,7 +85,7 @@ describe('Rxjs', () => {
           );
       });
     });
-    describe('from :', () => {
+    xdescribe('from :', () => {
 
       xit('should converts an array to an Observable', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
@@ -172,6 +172,40 @@ describe('Rxjs', () => {
       });
 
 
+    });
+    xdescribe('map :', () => {
+
+      it('should add 10 to each number', (done) => {
+        const source$ = Observable.from([1, 2, 3, 4, 5]).map(val => val + 10);
+        let result = [];
+        const actual = [11, 12, 13, 14, 15];
+        const subscribe = source$
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+      it('should map to single property', (done) => {
+        const from$ = Observable.from([{name: 'Joe', age: 30}, {name: 'Frank', age: 20}, {name: 'Ryan', age: 50}]);
+        const source$ = Observable.map(person => person.name, from$);
+        let result = [];
+        const actual = ["Joe", "Frank", "Ryan"];
+        const subscribe = source$
+          .subscribe(
+            val => result = [...result, val],
+            () => {
+            },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
     });
   });
 });
