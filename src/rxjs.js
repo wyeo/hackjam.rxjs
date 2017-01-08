@@ -285,3 +285,18 @@ Observable.prototype.take = function (count) {
   });
 };
 
+/**
+ * Filtering operators : first
+ * Emits only the first value. Or emits only the first value that passes some test.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/filtering/first.html } for examples.
+ *
+ * @param predicate {Function}
+ * @returns {Observable}
+ */
+Observable.prototype.first = function (predicate) {
+  if (predicate) {
+    return this.filter(predicate).take(1);
+  }
+  return this.take(1);
+};

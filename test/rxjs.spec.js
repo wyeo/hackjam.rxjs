@@ -353,7 +353,7 @@ describe('Rxjs', () => {
           );
       });
     });
-    describe('take :', () => {
+    xdescribe('take :', () => {
       it('should take 1 value from source', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).take(1);
         const actual = 1;
@@ -361,7 +361,8 @@ describe('Rxjs', () => {
         const subscribe = source$
           .subscribe(
             val => result = val,
-            () => {},
+            () => {
+            },
             () => {
               expect(actual).equals(result);
               done();
@@ -371,14 +372,48 @@ describe('Rxjs', () => {
 
       it('should take 2 value from source', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).take(2);
-        const actual = [1,2];
+        const actual = [1, 2];
         let result = [];
         const subscribe = source$
           .subscribe(
-            val => result =[...result, val],
-            () => {},
+            val => result = [...result, val],
+            () => {
+            },
             () => {
               expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+    });
+    describe('first :', () => {
+      it('should emit first value from sequence', (done) => {
+        const source$ = Observable.of(1, 2, 3, 4, 5).first();
+        const actual = 1;
+        let result;
+        const subscribe = source$
+          .subscribe(
+            val => result = val,
+            () => {
+            },
+            () => {
+              expect(actual).equals(result);
+              done();
+            }
+          );
+      });
+
+      it('should take first value to pass predicate', (done) => {
+        const source$ = Observable.of(1, 2, 3, 4, 5).first(num => num === 5);
+        const actual = 5;
+        let result;
+        const subscribe = source$
+          .subscribe(
+            val => result = val,
+            () => {
+            },
+            () => {
+              expect(actual).equals(result);
               done();
             }
           );
