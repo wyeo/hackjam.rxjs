@@ -258,3 +258,30 @@ Observable.prototype.concat = Observable.concat = function (...observables) {
     }
   });
 };
+
+/**
+ * Filtering operators : take
+ * Takes the first count values from the source, then completes.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/filtering/take.html } for examples.
+ *
+ * @param count {Number}
+ * @returns {Observable}
+ */
+Observable.prototype.take = function (count) {
+  const observable = this;
+  return new Observable((observer) => {
+    let counter = 0;
+    observable.subscribe((data) => {
+      if (counter++ < count) {
+        observer.next(data);
+        return;
+      }
+    }, (err) => {
+      observer.error(err);
+    }, () => {
+      observer.complete();
+    });
+  });
+};
+

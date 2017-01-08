@@ -317,7 +317,7 @@ describe('Rxjs', () => {
       });
 
     });
-    describe('concat :', () => {
+    xdescribe('concat :', () => {
       it('should concat 2 basic observables', (done) => {
         const sourceOne$ = Observable.of(10);
         const sourceTwo$ = Observable.of(20);
@@ -346,6 +346,37 @@ describe('Rxjs', () => {
             val => result = [...result, val],
             () => {
             },
+            () => {
+              expect(actual).deep.equals(result);
+              done();
+            }
+          );
+      });
+    });
+    describe('take :', () => {
+      it('should take 1 value from source', (done) => {
+        const source$ = Observable.of(1, 2, 3, 4, 5).take(1);
+        const actual = 1;
+        let result;
+        const subscribe = source$
+          .subscribe(
+            val => result = val,
+            () => {},
+            () => {
+              expect(actual).equals(result);
+              done();
+            }
+          );
+      });
+
+      it('should take 2 value from source', (done) => {
+        const source$ = Observable.of(1, 2, 3, 4, 5).take(2);
+        const actual = [1,2];
+        let result = [];
+        const subscribe = source$
+          .subscribe(
+            val => result =[...result, val],
+            () => {},
             () => {
               expect(actual).deep.equals(result);
               done();
