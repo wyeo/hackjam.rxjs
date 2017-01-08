@@ -386,7 +386,7 @@ describe('Rxjs', () => {
           );
       });
     });
-    describe('first :', () => {
+    xdescribe('first :', () => {
       it('should emit first value from sequence', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).first();
         const actual = 1;
@@ -414,6 +414,22 @@ describe('Rxjs', () => {
             },
             () => {
               expect(actual).equals(result);
+              done();
+            }
+          );
+      });
+    });
+    describe('skip :', () => {
+      it('should skipping values before emission', (done) => {
+        const source$ = Observable.of(1, 2, 3, 4, 5).skip(3);
+        const actual = [4, 5];
+        let results = [];
+        const subscribe = source$
+          .subscribe(
+            val => results = [...results, val],
+            () => {},
+            () => {
+              expect(actual).deep.equals(results);
               done();
             }
           );

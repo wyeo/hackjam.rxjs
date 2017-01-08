@@ -300,3 +300,30 @@ Observable.prototype.first = function (predicate) {
   }
   return this.take(1);
 };
+
+/**
+ * Filtering operators : skip
+ * Returns an Observable that skips n items emitted by an Observable.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/filtering/skip.html } for examples.
+ *
+ * @param the {Function}
+ * @returns {Observable}
+ */
+Observable.prototype.skip = function (the) {
+  const observable = this;
+  return new Observable((observer) => {
+    let counter = 0;
+    observable
+      .subscribe(
+        (data) => {
+          if (counter++ >= the) {
+            observer.next(data);
+            return;
+          }
+        },
+        (err) => observer.error(err),
+        () => observer.complete()
+      );
+  });
+};
