@@ -2,15 +2,7 @@
 // a producer is a function that throws/produce values and accept an observer
 // an observer is just an object that has 3 functions : next, error, complete
 // and listen the value emitted  by the producer
-export function Observable(producer) {
-  this._producer = producer;
-  this.subscribe = (next, error, complete) => {
-    const observer = (typeof next !== 'function')
-      ? next
-      : {next, error, complete};
-    return this._producer(observer);
-  }
-}
+export function Observable(producer) {}
 
 /**
  * Static creation operators : of
@@ -19,15 +11,7 @@ export function Observable(producer) {
  * @param args
  * @returns {Observable}
  */
-Observable.of = (...args) => {
-  const producer = (observer) => {
-    for (let el of args) {
-      observer.next(el)
-    }
-    observer.complete();
-  };
-  return new Observable(producer);
-};
+Observable.of = (...args) => {};
 
 /**
  * Static creation operators : fromArray
@@ -39,21 +23,7 @@ Observable.of = (...args) => {
  * @param args {Array}
  * @returns {Observable}
  */
-
-Observable.fromArray = (args = []) => {
-  const producer = (observer) => {
-    try {
-      for (let el of args) {
-        observer.next(el)
-      }
-      observer.complete()
-    } catch (error) {
-      observer.error(error);
-      observer.complete();
-    }
-  };
-  return new Observable(producer);
-};
+Observable.fromArray = (args = []) => {};
 
 /**
  * Static creation operators : fromPromise
@@ -64,23 +34,7 @@ Observable.fromArray = (args = []) => {
  * @param promise {Promise}
  * @returns {Observable}
  */
-Observable.fromPromise = (promise = {}) => {
-  return new Observable((observer) => {
-    if (typeof promise.then !== 'function') {
-      observer.error(' The function provided in argument should be a Promise');
-      observer.complete();
-      return;
-    }
-
-    promise.then((data) => {
-      observer.next(data);
-      observer.complete();
-    }).catch((err) => {
-      observer.error('Error in the resolution of the promise');
-      observer.complete();
-    })
-  });
-};
+Observable.fromPromise = (promise = {}) => {};
 
 /**
  * Static creation operators : from
@@ -91,16 +45,7 @@ Observable.fromPromise = (promise = {}) => {
  * @param input
  * @returns {Observable}
  */
-Observable.from = (input) => {
-  return new Observable((observer) => {
-
-    if (typeof input.then === 'function') {
-      return Observable.fromPromise(input).subscribe(observer);
-    }
-
-    return Observable.fromArray(input).subscribe(observer);
-  });
-};
+Observable.from = (input) => {};
 
 /**
  * Transformation operators : map
@@ -113,19 +58,7 @@ Observable.from = (input) => {
  * @returns {Observable}
  */
 
-Observable.prototype.map = Observable.map = function (projection, thisArgs) {
-  const observable = thisArgs || this;
-  return new Observable((observer) => {
-    observable
-      .subscribe((data) => {
-        observer.next(projection(data));
-      }, (err) => {
-        observer.error(err);
-      }, () => {
-        observer.complete();
-      });
-  });
-};
+Observable.prototype.map = Observable.map = function (projection, thisArgs) {};
 
 /**
  * Filtering operators : filter
@@ -137,22 +70,7 @@ Observable.prototype.map = Observable.map = function (projection, thisArgs) {
  * @param thisArgs: an optional argument to define what this is in the project function
  * @returns {Observable}
  */
-Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {
-  const observable = thisArgs || this;
-  return new Observable((observer) => {
-    observable
-      .subscribe((data) => {
-        const res = predicate(data);
-        if (res) {
-          observer.next(data);
-        }
-      }, (err) => {
-        observer.error(err);
-      }, () => {
-        observer.complete();
-      });
-  });
-};
+Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {};
 
 /**
  * Transformation operators : mapTo
@@ -163,10 +81,7 @@ Observable.prototype.filter = Observable.filter = function (predicate, thisArgs)
  * @param constant
  * @returns {Observable}
  */
-Observable.prototype.mapTo = function (constant) {
-  return this
-    .map((e) => constant);
-};
+Observable.prototype.mapTo = function (constant) {};
 
 /**
  * Transformation operators : do
@@ -179,24 +94,7 @@ Observable.prototype.mapTo = function (constant) {
  * @param complete
  * @returns {Observable}
  */
-Observable.prototype.do = function (next = (() => {
-}), error = (() => {
-}), complete = (() => {
-})) {
-  return new Observable((observer) => {
-    this
-      .subscribe((data) => {
-        next(data);
-        observer.next(data);
-      }, (err) => {
-        error(err);
-        observer.error(err);
-      }, () => {
-        complete();
-        observer.complete();
-      });
-  });
-};
+Observable.prototype.do = function (next, error, complete) {};
 
 
 /**
@@ -208,19 +106,7 @@ Observable.prototype.do = function (next = (() => {
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.startWith = function (...args) {
-  const observable = this;
-  return new Observable((observer) => {
-    args.forEach((value) => observer.next(value));
-    observable.subscribe((data) => {
-      observer.next(data);
-    }, (err) => {
-      observer.error(err);
-    }, () => {
-      observer.complete();
-    });
-  });
-};
+Observable.prototype.startWith = function (...args) {};
 
 /**
  * Combinations operators : concat
@@ -231,33 +117,7 @@ Observable.prototype.startWith = function (...args) {
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.concat = Observable.concat = function (...observables) {
-  const observable = this;
-  return new Observable((observer) => {
-    const sources$ = observables.slice();
-
-    if (typeof observable.subscribe === 'function') {
-      observable.subscribe(observer.next, observer.error, concat);
-      return;
-    }
-    concat();
-    function concat() {
-      let subscribed = false;
-      let obs$;
-      while (sources$.length !== 0) {
-        if (!subscribed) {
-          obs$ = sources$.shift();
-          subscribed = true;
-          obs$
-            .subscribe(observer.next, observer.error, () => {
-              subscribed = false;
-            });
-        }
-      }
-      observer.complete();
-    }
-  });
-};
+Observable.prototype.concat = Observable.concat = function (...observables) {};
 
 /**
  * Filtering operators : take
@@ -268,22 +128,7 @@ Observable.prototype.concat = Observable.concat = function (...observables) {
  * @param count {Number}
  * @returns {Observable}
  */
-Observable.prototype.take = function (count) {
-  const observable = this;
-  return new Observable((observer) => {
-    let counter = 0;
-    observable.subscribe((data) => {
-      if (counter++ < count) {
-        observer.next(data);
-        return;
-      }
-    }, (err) => {
-      observer.error(err);
-    }, () => {
-      observer.complete();
-    });
-  });
-};
+Observable.prototype.take = function (count) {};
 
 /**
  * Filtering operators : first
@@ -294,12 +139,7 @@ Observable.prototype.take = function (count) {
  * @param predicate {Function}
  * @returns {Observable}
  */
-Observable.prototype.first = function (predicate) {
-  if (predicate) {
-    return this.filter(predicate).take(1);
-  }
-  return this.take(1);
-};
+Observable.prototype.first = function (predicate) {};
 
 /**
  * Filtering operators : skip
@@ -310,20 +150,4 @@ Observable.prototype.first = function (predicate) {
  * @param the {Function}
  * @returns {Observable}
  */
-Observable.prototype.skip = function (the) {
-  const observable = this;
-  return new Observable((observer) => {
-    let counter = 0;
-    observable
-      .subscribe(
-        (data) => {
-          if (counter++ >= the) {
-            observer.next(data);
-            return;
-          }
-        },
-        (err) => observer.error(err),
-        () => observer.complete()
-      );
-  });
-};
+Observable.prototype.skip = function (the) {};

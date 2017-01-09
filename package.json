@@ -4,14 +4,14 @@
   "description": "Rebuild rxjs from scratch",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "mocha"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/hackages/hackjam.rxjs.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "team@hackages.io",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/hackages/hackjam.rxjs/issues"

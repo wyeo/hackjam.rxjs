@@ -2,12 +2,7 @@
 // a producer is  a function that throws/produce values and accept an observer
 // a observer is just an object that have 3 function : next, error, complete
 //  and listen the value emitted  by the producer
-function Observable(producer) {
-  this._producer = producer;
-  this.subscribe = (observer) => {
-    return this._producer(observer)
-  }
-}
+class  Observable {}
 /**
  * Create a producer that emit 3 times the value 10
  * and complete
