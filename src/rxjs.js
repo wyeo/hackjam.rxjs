@@ -1,7 +1,7 @@
-// a observable is a function that accepte  an producer in parameter and have a subscribe method
-// a producer is  a function that throws/produce values and accept an observer
-// a observer is just an object that have 3 function : next, error, complete
-//  and listen the value emitted  by the producer
+// an observable is a function that accepte a producer in parameter and have a subscribe method
+// a producer is a function that throws/produce values and accept an observer
+// an observer is just an object that has 3 functions : next, error, complete
+// and listen the value emitted  by the producer
 export function Observable(producer) {
   this._producer = producer;
   this.subscribe = (next, error, complete) => {
