@@ -9,8 +9,7 @@
     "build": "webpack -p",
     "watch": "webpack -w",
     "start": "npm-run-all --parallel watch live",
-    "prestart": "npm i",
-    "browser": "run-p test watch"
+    "prestart": "npm i"
   },
   "repository": {
     "type": "git",
