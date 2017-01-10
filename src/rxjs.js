@@ -2,16 +2,30 @@
 // a producer is a function that throws/produce values and accepts an observer
 // an observer is just an object that has 3 functions: next, error, complete
 // and listen to the value emitted  by the producer
-export function Observable(producer) {}
+export class Observable {}
+
+/**
+ * Static creation operators : interval
+ * Emit numbers in sequence based on provided timeframe.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/creation/interval.html } for examples.
+ *
+ * @param period {Number}
+ * @returns {Observable}
+ */
+Observable.interval = (period) => {};
 
 /**
  * Static creation operators : of
  * Emits the arguments you provide, then completes.
  *
+ * @see {@link https://www.learnrxjs.io/operators/creation/of.html } for examples.
+ *
  * @param args
  * @returns {Observable}
  */
-Observable.of = (...args) => {};
+Observable.of = (...args) => {
+};
 
 /**
  * Static creation operators : fromArray
@@ -23,7 +37,8 @@ Observable.of = (...args) => {};
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.fromArray = (args = []) => {};
+Observable.fromArray = (args = []) => {
+};
 
 /**
  * Static creation operators : fromPromise
@@ -34,7 +49,8 @@ Observable.fromArray = (args = []) => {};
  * @param promise {Promise}
  * @returns {Observable}
  */
-Observable.fromPromise = (promise = {}) => {};
+Observable.fromPromise = (promise = {}) => {
+};
 
 /**
  * Static creation operators : from
@@ -45,7 +61,8 @@ Observable.fromPromise = (promise = {}) => {};
  * @param input
  * @returns {Observable}
  */
-Observable.from = (input) => {};
+Observable.from = (input) => {
+};
 
 /**
  * Transformation operators : map
@@ -58,7 +75,8 @@ Observable.from = (input) => {};
  * @returns {Observable}
  */
 
-Observable.prototype.map = Observable.map = function (projection, thisArgs) {};
+Observable.prototype.map = Observable.map = function (projection, thisArgs) {
+};
 
 /**
  * Filtering operators : filter
@@ -70,7 +88,8 @@ Observable.prototype.map = Observable.map = function (projection, thisArgs) {};
  * @param thisArgs: an optional argument to define what this is in the project function
  * @returns {Observable}
  */
-Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {};
+Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {
+};
 
 /**
  * Transformation operators : mapTo
@@ -81,7 +100,8 @@ Observable.prototype.filter = Observable.filter = function (predicate, thisArgs)
  * @param constant
  * @returns {Observable}
  */
-Observable.prototype.mapTo = function (constant) {};
+Observable.prototype.mapTo = function (constant) {
+};
 
 /**
  * Transformation operators : do
@@ -94,7 +114,8 @@ Observable.prototype.mapTo = function (constant) {};
  * @param complete
  * @returns {Observable}
  */
-Observable.prototype.do = function (next, error, complete) {};
+Observable.prototype.do = function (next, error, complete) {
+};
 
 
 /**
@@ -106,7 +127,8 @@ Observable.prototype.do = function (next, error, complete) {};
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.startWith = function (...args) {};
+Observable.prototype.startWith = function (...args) {
+};
 
 /**
  * Combinations operators : concat
@@ -117,7 +139,8 @@ Observable.prototype.startWith = function (...args) {};
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.concat = Observable.concat = function (...observables) {};
+Observable.prototype.concat = Observable.concat = function (...observables) {
+};
 
 /**
  * Filtering operators : take
@@ -128,7 +151,8 @@ Observable.prototype.concat = Observable.concat = function (...observables) {};
  * @param count {Number}
  * @returns {Observable}
  */
-Observable.prototype.take = function (count) {};
+Observable.prototype.take = function (count) {
+};
 
 /**
  * Filtering operators : first
@@ -139,7 +163,8 @@ Observable.prototype.take = function (count) {};
  * @param predicate {Function}
  * @returns {Observable}
  */
-Observable.prototype.first = function (predicate) {};
+Observable.prototype.first = function (predicate) {
+};
 
 /**
  * Filtering operators : skip
@@ -150,4 +175,5 @@ Observable.prototype.first = function (predicate) {};
  * @param the {Function}
  * @returns {Observable}
  */
-Observable.prototype.skip = function (the) {};
+Observable.prototype.skip = function (the) {
+};

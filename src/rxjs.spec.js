@@ -5,6 +5,26 @@ describe('Rxjs', () => {
 
   describe('Operators', () => {
 
+    describe('interval :', () => {
+
+      it('should emit the sequence of values at 1-second interval', (done) => {
+        const source$ = Observable.interval(400);
+        let result = [];
+        const actual = [0, 1, 2];
+        const unsubscribe = source$
+          .subscribe(
+            val => result = [...result, val]
+          );
+
+        setTimeout(() => {
+          unsubscribe();
+          expect(actual).deep.equals(result);
+          done();
+        }, 1500)
+      });
+
+
+    });
     describe('of :', () => {
 
       it('should emitting a sequence of numbers', (done) => {
