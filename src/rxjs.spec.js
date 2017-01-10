@@ -1,11 +1,11 @@
-import {expect} from "chai";
-import {Observable} from "../src/rxjs";
+import { expect } from "chai";
+import { Observable } from "./rxjs";
 
 describe('Rxjs', () => {
 
   describe('Operators', () => {
 
-    xdescribe('of :', () => {
+    describe('of :', () => {
 
       it('should emitting a sequence of numbers', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5);
@@ -22,6 +22,7 @@ describe('Rxjs', () => {
             }
           );
       });
+
       it('should emitting an object, array, and function', (done) => {
         const source$ = Observable.of({name: 'Brian'}, [1, 2, 3], function hello() {
           return 'Hello'
@@ -45,7 +46,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('fromArray :', () => {
+
+    describe('fromArray :', () => {
 
       it('should converts an array to an Observable', (done) => {
         const source$ = Observable.fromArray([1, 2, 3, 4, 5]);
@@ -63,7 +65,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('fromPromise :', () => {
+
+    describe('fromPromise :', () => {
 
       it('should converts an promise to an Observable', (done) => {
         const actual = 'Hello World!';
@@ -85,9 +88,10 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('from :', () => {
 
-      xit('should converts an array to an Observable', (done) => {
+    describe('from :', () => {
+
+      it('should converts an array to an Observable', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
         let result = [];
         const actual = [1, 2, 3, 4, 5];
@@ -107,7 +111,7 @@ describe('Rxjs', () => {
           );
       });
 
-      xit('should converts an promise to an Observable', (done) => {
+      it('should converts an promise to an Observable', (done) => {
         const actual = 'Hello World!';
         const promise = new Promise(resolve => resolve(actual));
         const source$ = Observable.from(promise);
@@ -127,7 +131,7 @@ describe('Rxjs', () => {
           );
       });
 
-      it('should converts a string to an Observable', (done) => {
+      it('should convert a string to an Observable', (done) => {
         const actual = ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd'];
         const value = actual.join('');
         const source$ = Observable.from(value);
@@ -147,7 +151,7 @@ describe('Rxjs', () => {
           );
       });
 
-      it('should converts a colllection to an Observable', (done) => {
+      it('should convert a colllection to an Observable', (done) => {
         const map = new Map();
         map.set(1, 'Hi');
         map.set(2, 'Bye');
@@ -170,10 +174,9 @@ describe('Rxjs', () => {
             }
           );
       });
-
-
     });
-    xdescribe('map :', () => {
+
+    describe('map :', () => {
 
       it('should add 10 to each number', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]).map(val => val + 10);
@@ -207,7 +210,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('mapTo :', () => {
+
+    describe('mapTo :', () => {
 
       it('should every emission to "a" ', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]).mapTo('a');
@@ -226,7 +230,8 @@ describe('Rxjs', () => {
       });
 
     });
-    xdescribe('do :', () => {
+
+    describe('do :', () => {
 
       it('should just logging ', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
@@ -247,7 +252,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('filter :', () => {
+
+    describe('filter :', () => {
       it('should filter for even numbers', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]).filter(num => num % 2 === 0);
         let result = [];
@@ -263,6 +269,7 @@ describe('Rxjs', () => {
             }
           );
       });
+
       it('should filter objects based on property', (done) => {
         const from$ = Observable.from([{name: 'Joe', age: 30}, {name: 'Frank', age: 20}, {name: 'Ryan', age: 50}]);
         const source$ = Observable.filter(person => person.age >= 30, from$).map(person => person.name);
@@ -279,9 +286,9 @@ describe('Rxjs', () => {
             }
           );
       });
-
     });
-    xdescribe('startWith :', () => {
+
+    describe('startWith :', () => {
       it('should start with on number sequence', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]);
         let result = [];
@@ -315,9 +322,9 @@ describe('Rxjs', () => {
             }
           );
       });
-
     });
-    xdescribe('concat :', () => {
+
+    describe('concat :', () => {
       it('should concat 2 basic observables', (done) => {
         const sourceOne$ = Observable.of(10);
         const sourceTwo$ = Observable.of(20);
@@ -353,7 +360,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('take :', () => {
+
+    describe('take :', () => {
       it('should take 1 value from source', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).take(1);
         const actual = 1;
@@ -386,7 +394,8 @@ describe('Rxjs', () => {
           );
       });
     });
-    xdescribe('first :', () => {
+
+    describe('first :', () => {
       it('should emit first value from sequence', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).first();
         const actual = 1;
@@ -419,6 +428,7 @@ describe('Rxjs', () => {
           );
       });
     });
+
     describe('skip :', () => {
       it('should skipping values before emission', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5).skip(3);

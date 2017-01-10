@@ -1,8 +1,8 @@
-// a observable is a function that accept  an producer in parameter and have a subscribe method
-// a producer is  a function that throws/produce values and accept an observer
-// a observer is just an object that have 3 function : next, error, complete
+// an observable is a function that accepts a producer in parameter and has a subscribe method
+// a producer is  a function that throws/produces values and accepts an observer
+// an observer is just an object that has 3 functions : next, error, complete
 //  and listen the value emitted  by the producer
-class  Observable {}
+export class  Observable {}
 /**
  * Create a producer that emit 3 times the value 10
  * and complete

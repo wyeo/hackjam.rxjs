@@ -7,3 +7,4 @@ esdoc/
 test/dist/*
 solutions/
 yarn.lock
+dist
