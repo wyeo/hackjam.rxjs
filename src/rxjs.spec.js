@@ -1,5 +1,5 @@
-import { expect } from "chai";
-import { Observable } from "./rxjs";
+import {expect} from "chai";
+import {Observable} from "./rxjs";
 
 describe('Rxjs', () => {
 
@@ -437,7 +437,8 @@ describe('Rxjs', () => {
         const subscribe = source$
           .subscribe(
             val => results = [...results, val],
-            () => {},
+            () => {
+            },
             () => {
               expect(actual).deep.equals(results);
               done();
