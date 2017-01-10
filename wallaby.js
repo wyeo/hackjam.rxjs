@@ -2,6 +2,7 @@ module.exports = function (wallaby) {
   return {
     files: [
       'src/**/*.js',
+      { pattern: 'src/*spec.js', ignore: true }
     ],
 
     tests: [
