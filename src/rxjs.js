@@ -2,7 +2,8 @@
 // a producer is a function that throws/produce values and accepts an observer
 // an observer is just an object that has 3 functions: next, error, complete
 // and listen to the value emitted  by the producer
-export class Observable {}
+export class Observable {
+}
 
 /**
  * Static creation operators : interval
@@ -13,7 +14,8 @@ export class Observable {}
  * @param period {Number}
  * @returns {Observable}
  */
-Observable.interval = (period) => {};
+Observable.interval = (period) => {
+};
 
 /**
  * Static creation operators : of
