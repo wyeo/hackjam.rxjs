@@ -4,13 +4,11 @@
   "description": "Rebuild rxjs from scratch",
   "main": "index.js",
   "scripts": {
-    "test": "mocha",
     "live": "live-server",
     "build": "webpack -p",
     "watch": "webpack -w",
-    "start": "npm-run-all --parallel watch live",
     "prestart": "npm i",
-    "browser": "run-p test watch"
+    "start": "npm-run-all --parallel watch live"
   },
   "repository": {
     "type": "git",
