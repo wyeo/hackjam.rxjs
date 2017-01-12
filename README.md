@@ -6,4 +6,6 @@ Rebuild rxjs from scratch
   -- run: `npm start` |=> This will start your project in the browser
   -- recommended to use atom.io with wallabyjs
 
+-- Gitter for this repo:
+
 -- Pair programming is mandatory :-)

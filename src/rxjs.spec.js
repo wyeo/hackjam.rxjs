@@ -25,8 +25,8 @@ describe('Rxjs', () => {
 
 
     });
-    describe('of :', () => {
 
+    describe('of :', () => {
       it('should emit a sequence of numbers', (done) => {
         const source$ = Observable.of(1, 2, 3, 4, 5);
         let result = [];
@@ -233,7 +233,6 @@ describe('Rxjs', () => {
     });
 
     describe('mapTo :', () => {
-
       it('should turn every value to "a" ', (done) => {
         const source$ = Observable.from([1, 2, 3, 4, 5]).mapTo('a');
         let result = [];
@@ -467,4 +466,3 @@ describe('Rxjs', () => {
       });
     });
   });
-});

@@ -1,9 +1,22 @@
+// Observable
 // an observable is a function that accepts a producer in parameter and has a subscribe method
-// a producer is a function that throws/produce values and accepts an observer
+// Producer
+// A producer is  a function that throws/produces values and accepts an observer
+// Observer
 // an observer is just an object that has 3 functions: next, error, complete
 // and listen to the value emitted  by the producer
-export class Observable {
-}
+export class Observable {}
+
+/**
+ * Static creation operators : interval
+ * Emit numbers in sequence based on provided timeframe.
+ *
+ * @see {@link https://www.learnrxjs.io/operators/creation/interval.html } for examples.
+ *
+ * @param period {Number}
+ * @returns {Observable}
+ */
+Observable.interval = (period) => {};
 
 /**
  * Static creation operators : of
@@ -17,20 +30,6 @@ export class Observable {
 Observable.of = (...args) => {};
 
 /**
- * Static creation operators : interval
- * Emit numbers in sequence based on provided timeframe.
- *
- * @see {@link https://www.learnrxjs.io/operators/creation/interval.html } for examples.
- *
- * @param period {Number}
- * @returns {Observable}
- */
-Observable.interval = (period) => {
-};
-
-
-
-/**
  * Static creation operators : fromArray
  * Converts an array to an Observable.
  *
@@ -40,8 +39,7 @@ Observable.interval = (period) => {
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.fromArray = (args = []) => {
-};
+Observable.fromArray = (args = []) => {};
 
 /**
  * Static creation operators : fromPromise
@@ -142,8 +140,7 @@ Observable.prototype.startWith = function (...args) {
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.concat = Observable.concat = function (...observables) {
-};
+Observable.prototype.concat = Observable.concat = function (...observables) {};
 
 /**
  * Filtering operators : take
@@ -154,8 +151,7 @@ Observable.prototype.concat = Observable.concat = function (...observables) {
  * @param count {Number}
  * @returns {Observable}
  */
-Observable.prototype.take = function (count) {
-};
+Observable.prototype.take = function (count) {};
 
 /**
  * Filtering operators : first
