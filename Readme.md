@@ -88,7 +88,7 @@ clickEvent$
 // the observable you just gave me"
 // this is called an higher order observable, an observable that returns an observable
 ```
-There's actually a shortcut we can use to avoid chaining switch and map called [switchMapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-switchMapTo)
+There's actually a shortcut we can use to avoid chaining switch and mapTo called [switchMapTo](http://reactivex.io/rxjs/class/es6/Observable.js~Observable.html#instance-method-switchMapTo)
 ```javascript
 clickEvent$
     .switchMapTo(values$)
