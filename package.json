@@ -1,0 +1,22 @@
+{
+  "name": "test-hackages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "prestart": "npm i",
+    "watch": "hackages watch",
+    "live": "hackages live",
+    "start": "npm-run-all --parallel watch live"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "hackages": "0.0.8",
+    "npm-run-all": "^4.0.1"
+  },
+  "dependencies": {
+    "rxjs": "^5.1.1"
+  }
+}
