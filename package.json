@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "yarn install",
     "watch": "hackages watch",
     "live": "hackages live",
     "start": "npm-run-all --parallel watch live"
@@ -12,7 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "hackages": "0.0.10",
+    "hackages": "0.1.0",
     "npm-run-all": "^4.0.1"
   },
   "dependencies": {
