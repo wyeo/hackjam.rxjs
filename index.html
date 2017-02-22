@@ -11,17 +11,12 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/mocha/3.1.2/mocha.js"></script>
 
   <script>mocha.setup('bdd')</script>
-  <script src="dist/00_intro.spec.js"></script>
   <script src="dist/01_rxjs.spec.js"></script>
 
 
   <script>
     mocha.checkLeaks();
-<<<<<<< HEAD
-    mocha.globals(['jQuery','hasCert']);
-=======
     mocha.globals(['jQuery']);
->>>>>>> random-exercises
     mocha.run();
   </script>
 </body>

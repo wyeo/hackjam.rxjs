@@ -2,7 +2,6 @@ const path = require('path');
 
 module.exports = {
   entry: {
-    '00_intro': './src/js/intro.spec.js',
     '01_rxjs': './src/js/rxjs.spec.js'
   },
   output: {
