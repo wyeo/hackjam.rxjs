@@ -4,7 +4,6 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "prestart": "npm i",
     "watch": "hackages watch",
     "live": "hackages live",
     "start": "npm-run-all --parallel watch live"
@@ -13,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "hackages": "0.0.8",
+    "hackages": "0.0.10",
     "npm-run-all": "^4.0.1"
   },
   "dependencies": {
