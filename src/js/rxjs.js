@@ -4,7 +4,6 @@
 // and listen to the value emitted  by the producer
 export class Observable {}
 
-
 /**
  * Static creation operators : of
  * Emits the arguments you provide, then completes.
@@ -14,7 +13,15 @@ export class Observable {}
  * @param args
  * @returns {Observable}
  */
-Observable.of = (...args) => {};
+Observable.of = (...args) => {
+
+  Observable.prototype.subscribe = (nextFn, errorFn, completeFn) => {
+    args.map(x => nextFn(x))
+    completeFn()
+  }
+
+  return new Observable()
+};
 
 /**
  * Static creation operators : interval
@@ -25,7 +32,14 @@ Observable.of = (...args) => {};
  * @param period {Number}
  * @returns {Observable}
  */
-Observable.interval = (period) => {};
+Observable.interval = (period) => {
+  Observable.prototype.subscribe = (nextFn) => {
+    let i = 0
+    const timeout = setInterval((function(){ nextFn(i++) }), period)
+    return clearInterval.bind(null, timeout)
+  }
+  return new Observable()
+};
 
 
 /**
@@ -38,7 +52,9 @@ Observable.interval = (period) => {};
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.fromArray = (args = []) => {};
+Observable.fromArray = (args = []) => {
+  return Observable.of(...args)
+};
 
 /**
  * Static creation operators : fromPromise
@@ -49,7 +65,38 @@ Observable.fromArray = (args = []) => {};
  * @param promise {Promise}
  * @returns {Observable}
  */
-Observable.fromPromise = (promise = {}) => {};
+Observable.fromPromise = (promise = {}) => {
+  Observable.prototype.subscribe = (nextFn, errorFn, completeFn) => {
+    promise.then(x => {
+      nextFn(x)
+      completeFn()
+    })
+  }
+  return new Observable()
+};
+
+/* MY IMPLEMENTATIONS */
+
+Observable.fromString = (input = '') => {
+  Observable.prototype.subscribe = (nextFn, errorFn, completeFn) => {
+    const tmp = input.split('')
+    tmp.map(x => nextFn(x))
+    completeFn()
+  }
+  return new Observable
+}
+
+Observable.fromCollection = (input = []) => {
+  Observable.prototype.subscribe = (nextFn, errorFn, completeFn) => {
+    for(let x of input) {
+      nextFn(x)
+    }
+    completeFn()
+  }
+  return new Observable
+}
+
+/* -------------------------------------------*/
 
 /**
  * Static creation operators : from
@@ -60,7 +107,19 @@ Observable.fromPromise = (promise = {}) => {};
  * @param input
  * @returns {Observable}
  */
-Observable.from = (input) => {};
+Observable.from = (input) => {
+
+  if (input.constructor === Array) {
+    return Observable.fromArray(input)
+  }
+  if (input instanceof Promise) {
+    return Observable.fromPromise(input)
+  }
+  if (typeof(input) === 'string') {
+    return Observable.fromString(input)
+  }
+  return Observable.fromCollection(input)
+};
 
 /**
  * Transformation operators : map
@@ -73,7 +132,15 @@ Observable.from = (input) => {};
  * @returns {Observable}
  */
 
-Observable.prototype.map = Observable.map = function (projection, thisArgs) {};
+Observable.prototype.map = Observable.map = function (projection, thisArgs) {
+  const output = new Observable()
+  const input = thisArgs || this
+
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    input.subscribe(val => nextFn(projection(val)), errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Filtering operators : filter
@@ -85,7 +152,17 @@ Observable.prototype.map = Observable.map = function (projection, thisArgs) {};
  * @param thisArgs: an optional argument to define what this is in the project function
  * @returns {Observable}
  */
-Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {};
+Observable.prototype.filter = Observable.filter = function (predicate, thisArgs) {
+  const input = thisArgs || this
+  const output = new Observable()
+
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    input.subscribe(val => {
+      predicate(val) ? nextFn(val) : false
+    }, errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Transformation operators : mapTo
@@ -96,7 +173,15 @@ Observable.prototype.filter = Observable.filter = function (predicate, thisArgs)
  * @param constant
  * @returns {Observable}
  */
-Observable.prototype.mapTo = function (constant) {};
+Observable.prototype.mapTo = function (constant) {
+  const input = this
+  const output = new Observable()
+
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    input.subscribe(val => val ? nextFn(constant) : false, errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Transformation operators : do
@@ -109,10 +194,7 @@ Observable.prototype.mapTo = function (constant) {};
  * @param complete
  * @returns {Observable}
  */
-Observable.prototype.do = function (next = (() => {
-}), error = (() => {
-}), complete = (() => {
-})) {};
+Observable.prototype.do = function (Observer) { if (Observer) return this };
 
 /**
  * Combinations operators : startWith
@@ -123,7 +205,15 @@ Observable.prototype.do = function (next = (() => {
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.startWith = function (...args) {};
+Observable.prototype.startWith = function (...args) {
+  const output = new Observable()
+
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    args.forEach(x => nextFn(x))
+    this.subscribe(val => nextFn(val), errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Combinations operators : concat
@@ -134,7 +224,8 @@ Observable.prototype.startWith = function (...args) {};
  * @param args {Array}
  * @returns {Observable}
  */
-Observable.prototype.concat = Observable.concat = function (...observables) {};
+Observable.prototype.concat = Observable.concat = function (...observables) {
+};
 
 /**
  * Filtering operators : take
@@ -145,7 +236,16 @@ Observable.prototype.concat = Observable.concat = function (...observables) {};
  * @param count {Number}
  * @returns {Observable}
  */
-Observable.prototype.take = function (count) {};
+Observable.prototype.take = function (count) {
+  const output = new Observable()
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    let i = 0
+    this.subscribe(val => {
+      if (++i <= count) nextFn(val)
+    }, errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Filtering operators : first
@@ -156,7 +256,24 @@ Observable.prototype.take = function (count) {};
  * @param predicate {Function}
  * @returns {Observable}
  */
-Observable.prototype.first = function (predicate) {};
+Observable.prototype.first = function (predicate) {
+  const output = new Observable()
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    let state = true
+    this.subscribe(val => {
+      if (state) {
+        if ((typeof predicate === 'function') && predicate(val)) {
+          state = false
+          nextFn(val)
+        } else if (!predicate) {
+          state = false
+          nextFn(val)
+        }
+      }
+    }, errorFn, completeFn)
+  }
+  return output
+};
 
 /**
  * Filtering operators : skip
@@ -167,4 +284,18 @@ Observable.prototype.first = function (predicate) {};
  * @param the {Function}
  * @returns {Observable}
  */
-Observable.prototype.skip = function (the) {};
+Observable.prototype.skip = function (the) {
+  const output = new Observable()
+  output.subscribe = (nextFn, errorFn, completeFn) => {
+    let state = false
+    this.subscribe(val => {
+      if (state) nextFn(val)
+      else {
+        if (val === the) {
+          state = true
+        }
+      }
+    }, errorFn, completeFn)
+  }
+  return output
+};
